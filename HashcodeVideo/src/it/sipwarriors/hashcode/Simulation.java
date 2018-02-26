@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -38,6 +39,25 @@ public class Simulation {
 
   public long start(BufferedWriter writer) throws IOException {
     long points = 0;
+    StrategyInterface strategy = new StrategyInterface() {
+
+      @Override
+      public void analyze(Simulation simulation) {
+        // TODO sostituire questa classe astratta con una classe vera
+
+      }
+    };
+    strategy.analyze(this);
+    for (Iterator<CacheServer> itCache = cacheServersList.listIterator(); itCache.hasNext();) {
+      CacheServer cacheCor = itCache.next();
+      if (cacheCor.getVideoList().isEmpty()) {
+        itCache.remove();
+      }
+    }
+    writer.write(cacheServersList.size() + "\n");
+    for (CacheServer cacheServer : cacheServersList) {
+      writer.write(cacheServer.toString() + "\n");
+    }
     return points;
   }
 
@@ -92,6 +112,42 @@ public class Simulation {
     }
     in.close();
     return simulation;
+  }
+
+  public int getNumVideos() {
+    return numVideos;
+  }
+
+  public int getNumCache() {
+    return numCache;
+  }
+
+  public int getNumEndpoints() {
+    return numEndpoints;
+  }
+
+  public int getNumRequests() {
+    return numRequests;
+  }
+
+  public int getCacheCapacity() {
+    return cacheCapacity;
+  }
+
+  public List<Video> getVideoList() {
+    return videoList;
+  }
+
+  public List<CacheServer> getCacheServersList() {
+    return cacheServersList;
+  }
+
+  public List<Endpoint> getEndpointsList() {
+    return endpointsList;
+  }
+
+  public List<Request> getRequestsList() {
+    return requestsList;
   }
 
 }

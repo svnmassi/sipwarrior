@@ -34,4 +34,14 @@ public class CacheServer {
   public boolean canAddVideo(Video video) {
     return remainingCapacity >= video.getDimension();
   }
+
+  @Override
+  public String toString() {
+    StringBuffer sb = new StringBuffer(id);
+    for (Video video : videoList) {
+      sb.append(" ").append(video.getId());
+    }
+    return sb.toString();
+  }
+
 }
