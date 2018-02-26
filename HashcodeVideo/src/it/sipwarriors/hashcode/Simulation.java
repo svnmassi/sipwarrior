@@ -25,6 +25,7 @@ public class Simulation {
   private List<Video> videoList = new ArrayList<>();
   private List<CacheServer> cacheServersList = new ArrayList<>();
   private List<Endpoint> endpointsList = new ArrayList<>();
+  private List<Request> requestsList = new ArrayList<>();
 
   public Simulation(String params) {
     String[] par = params.split(" ");
@@ -67,6 +68,7 @@ public class Simulation {
     for (String dimensione : par) {
       simulation.videoList.add(new Video(videoId++, Integer.parseInt(dimensione)));
     }
+    // crea endpoints
     for (int i = 0; i < simulation.numEndpoints; i++) {
       riga = in.readLine();
       par = riga.split(" ");
@@ -78,6 +80,15 @@ public class Simulation {
         endpoint.setServerLatency(new Integer(par[0]), new Integer(par[1]));
         simulation.endpointsList.add(endpoint);
       }
+    }
+    // crea requests
+    for (int r = 0; r < simulation.numRequests; r++) {
+      riga = in.readLine();
+      par = riga.split(" ");
+      videoId = Integer.parseInt(par[0]);
+      int endpointId = Integer.parseInt(par[1]);
+      Request request = new Request(simulation.videoList.get(videoId), simulation.endpointsList.get(endpointId), Integer.parseInt(par[2]));
+      simulation.requestsList.add(request);
     }
     in.close();
     return simulation;
