@@ -19,4 +19,19 @@ public class CacheServer {
     remainingCapacity -= video.getDimension();
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public int getRemainingCapacity() {
+    return remainingCapacity;
+  }
+
+  public List<Video> getVideoList() {
+    return videoList;
+  }
+
+  public boolean canAddVideo(Video video) {
+    return remainingCapacity >= video.getDimension();
+  }
 }
