@@ -63,8 +63,9 @@ public class Simulation {
     // Crea i video
     String riga = in.readLine();
     String[] par = riga.split(" ");
+    int videoId = 0;
     for (String dimensione : par) {
-      simulation.videoList.add(new Video(Integer.parseInt(dimensione)));
+      simulation.videoList.add(new Video(videoId++, Integer.parseInt(dimensione)));
     }
     for (int i = 0; i < simulation.numEndpoints; i++) {
       riga = in.readLine();
@@ -74,7 +75,8 @@ public class Simulation {
       for (int j = 0; j < numCacheConnected; j++) {
         riga = in.readLine();
         par = riga.split(" ");
-        new Integer(par[0]);
+        endpoint.setServerLatency(new Integer(par[0]), new Integer(par[1]));
+        simulation.endpointsList.add(endpoint);
       }
     }
     in.close();
