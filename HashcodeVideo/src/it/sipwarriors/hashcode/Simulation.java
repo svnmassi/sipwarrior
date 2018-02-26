@@ -71,6 +71,11 @@ public class Simulation {
       par = riga.split(" ");
       Endpoint endpoint = new Endpoint(Integer.parseInt(par[0]));
       int numCacheConnected = Integer.parseInt(par[1]);
+      for (int j = 0; j < numCacheConnected; j++) {
+        riga = in.readLine();
+        par = riga.split(" ");
+        new Integer(par[0]);
+      }
     }
     in.close();
     return simulation;
