@@ -1,6 +1,6 @@
 package it.sipwarriors.hashcode;
 
-public class Video {
+public class Video implements Comparable<Video> {
 
   private final int dimension;
   private final int id;
@@ -17,5 +17,11 @@ public class Video {
   public int getId() {
     return id;
   }
+
+@Override
+public int compareTo(Video aVideo) {
+	// TODO Auto-generated method stub
+	return (id==aVideo.id && dimension == aVideo.dimension)?0:1;
+}
 
 }
