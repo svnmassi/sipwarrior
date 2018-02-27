@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -35,6 +34,9 @@ public class Simulation {
     numRequests = Integer.parseInt(par[2]);
     numCache = Integer.parseInt(par[3]);
     cacheCapacity = Integer.parseInt(par[4]);
+    for (int i = 0; i < numCache; i++) {
+      cacheServersList.add(new CacheServer(cacheCapacity, i));
+    }
   }
 
   public long start(BufferedWriter writer) throws IOException {
@@ -48,14 +50,14 @@ public class Simulation {
       }
     };
     strategy.analyze(this);
-    for (Iterator<CacheServer> itCache = cacheServersList.listIterator(); itCache.hasNext();) {
-      CacheServer cacheCor = itCache.next();
-      if (cacheCor.getVideoList().isEmpty()) {
-        itCache.remove();
+    List<CacheServer> cacheUtilizzate = new ArrayList<>();
+    for (CacheServer cacheServer : cacheServersList) {
+      if (!cacheServer.getVideoList().isEmpty()) {
+        cacheUtilizzate.add(cacheServer);
       }
     }
-    writer.write(cacheServersList.size() + "\n");
-    for (CacheServer cacheServer : cacheServersList) {
+    writer.write(cacheUtilizzate.size() + "\n");
+    for (CacheServer cacheServer : cacheUtilizzate) {
       writer.write(cacheServer.toString() + "\n");
     }
     long numeratore = 0l;
