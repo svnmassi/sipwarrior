@@ -41,14 +41,7 @@ public class Simulation {
 
   public long start(BufferedWriter writer) throws IOException {
     long points = 0;
-    StrategyInterface strategy = new StrategyInterface() {
-
-      @Override
-      public void analyze(Simulation simulation) {
-        // TODO sostituire questa classe astratta con una classe vera
-
-      }
-    };
+    StrategyInterface strategy = new TestStrategy();
     strategy.analyze(this);
     List<CacheServer> cacheUtilizzate = new ArrayList<>();
     for (CacheServer cacheServer : cacheServersList) {
@@ -100,7 +93,7 @@ public class Simulation {
     for (int i = 0; i < simulation.numEndpoints; i++) {
       riga = in.readLine();
       par = riga.split(" ");
-      Endpoint endpoint = new Endpoint(Integer.parseInt(par[0]));
+      Endpoint endpoint = new Endpoint(Integer.parseInt(par[0]), simulation);
       int numCacheConnected = Integer.parseInt(par[1]);
       for (int j = 0; j < numCacheConnected; j++) {
         riga = in.readLine();
