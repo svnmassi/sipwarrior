@@ -58,12 +58,18 @@ public class Simulation {
     for (CacheServer cacheServer : cacheServersList) {
       writer.write(cacheServer.toString() + "\n");
     }
-    return points;
+    long numeratore = 0l;
+    long denominatore = 0l;
+    for (Request request : requestsList) {
+      numeratore += request.getMinLatency() * request.getNumber();
+      denominatore += request.getNumber();
+    }
+    return numeratore * 1000l / denominatore;
   }
 
   public static void main(String[] args) throws IOException {
     if (args != null && args.length > 1) {
-      long total = 0;
+      long total = 0l;
       int numFiles = args.length / 2;
       for (int i = 0; i < numFiles; i++) {
         Simulation simulation = load(args[2 * i]);
@@ -107,7 +113,7 @@ public class Simulation {
       par = riga.split(" ");
       videoId = Integer.parseInt(par[0]);
       int endpointId = Integer.parseInt(par[1]);
-      Request request = new Request(simulation.videoList.get(videoId), simulation.endpointsList.get(endpointId), Integer.parseInt(par[2]));
+      Request request = new Request(simulation.videoList.get(videoId), simulation.endpointsList.get(endpointId), Integer.parseInt(par[2]), simulation);
       simulation.requestsList.add(request);
     }
     in.close();

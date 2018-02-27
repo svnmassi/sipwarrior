@@ -35,6 +35,15 @@ public class CacheServer {
     return remainingCapacity >= video.getDimension();
   }
 
+  public boolean contains(Video video) {
+    for (Video videoCor : videoList) {
+      if (videoCor.getId() == video.getId()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer(id);
