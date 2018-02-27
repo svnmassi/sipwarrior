@@ -15,8 +15,10 @@ public class CacheServer {
   }
 
   public void addVideo(Video video) {
-    videoList.add(video);
-    remainingCapacity -= video.getDimension();
+	  if(!videoList.contains(video)) {
+		  videoList.add(video);
+		  remainingCapacity -= video.getDimension();
+	  }
   }
 
   public int getId() {
